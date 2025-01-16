@@ -1,15 +1,13 @@
-def bubble_sort(arr):
+def bubble_sort(arr, ascending=True):
     """Функция для сортировки списка с использованием алгоритма сортировки пузырьком."""
     n = len(arr)
     for i in range(n):
-        # Флаг для отслеживания, произошли ли изменения
         swapped = False
         for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                # Меняем местами, если элемент больше следующего
+            # Сравниваем в зависимости от направления сортировки
+            if (ascending and arr[j] > arr[j + 1]) or (not ascending and arr[j] < arr[j + 1]):
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
                 swapped = True
-        # Если не было обменов, массив уже отсортирован
         if not swapped:
             break
 
@@ -27,7 +25,19 @@ def main():
             numbers.append(num)
 
         print("Исходный список:", numbers)
-        bubble_sort(numbers)
+
+        # Запрашиваем направление сортировки
+        order = input(
+            "Введите направление сортировки (введите 'asc' для возрастания или 'desc' для убывания): ").strip().lower()
+        if order == 'asc':
+            ascending = True
+        elif order == 'desc':
+            ascending = False
+        else:
+            print("Ошибка: Неверный ввод. Используйте 'asc' или 'desc'.")
+            return
+
+        bubble_sort(numbers, ascending)
         print("Отсортированный список:", numbers)
 
     except ValueError:
